@@ -8,9 +8,11 @@ dropdb:
 	docker exec -it postgres dropdb simple_bank
 
 migrateup:
-	migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose up
+	migrate -path db/migration -database "mysql://root:root@tcp(localhost:3306)/simple_bank" -verbose up
 
 migratedown:
-	migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose down
+	migrate -path db/migration -database "mysql://root:root@tcp(localhost:3306)/simple_bank" -verbose down
 
+sqlc:
+	sqlc generate
 .PHONY: postgres createdb dropdb migrateup migratedown
