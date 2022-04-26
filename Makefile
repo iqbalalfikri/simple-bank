@@ -13,8 +13,15 @@ migrateup:
 migratedown:
 	migrate -path db/migration -database "mysql://root:root@tcp(localhost:3306)/simple_bank" -verbose down
 
+migrateuptest:
+	migrate -path db/migration -database "mysql://root:root@tcp(localhost:3306)/simple_bank_test" -verbose up
+
+migratedowntest:
+	migrate -path db/migration -database "mysql://root:root@tcp(localhost:3306)/simple_bank_test" -verbose down
+
 sqlc:
 	sqlc generate
+
 test:
 	go test -v -cover ./...
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test migrateuptest migratedowntest

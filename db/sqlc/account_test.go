@@ -55,7 +55,7 @@ func TestGetAccount(t *testing.T) {
 	require.NotZero(t, result.CreatedAt)
 }
 
-func TestQueries_UpdateAccount(t *testing.T) {
+func TestUpdateAccount(t *testing.T) {
 	account := createRandomAccount(t)
 
 	newMoney := util.RandomMoney()

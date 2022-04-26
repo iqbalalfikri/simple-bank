@@ -12,7 +12,7 @@ var testQueries *Queries
 
 const (
 	dbDriver = "mysql"
-	dbSource = "root:root@tcp(localhost:3306)/simple_bank?parseTime=true"
+	dbSource = "root:root@tcp(localhost:3306)/simple_bank_test?parseTime=true"
 )
 
 func TestMain(m *testing.M) {
