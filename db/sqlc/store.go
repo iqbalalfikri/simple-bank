@@ -105,33 +105,50 @@ func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (Trans
 		}
 		result.ToEntry = entry
 
-		err = queries.AddAccountBalance(ctx, AddAccountBalanceParams{
-			Balance: -arg.Amount,
-			ID:      arg.FromAccountID,
-		})
-
-		if err != nil {
-			return err
-		}
-		result.FromAccount, err = queries.GetAccount(ctx, arg.FromAccountID)
-		if err != nil {
-			return err
+		if arg.FromAccountID < arg.ToAccountID {
+			result.FromAccount, result.ToAccount, err = addMoney(ctx, queries, int64(arg.FromAccountID), -arg.Amount, int64(arg.ToAccountID), arg.Amount)
+		} else {
+			result.ToAccount, result.FromAccount, err = addMoney(ctx, queries, int64(arg.ToAccountID), arg.Amount, int64(arg.FromAccountID), -arg.Amount)
 		}
 
-		err = queries.AddAccountBalance(ctx, AddAccountBalanceParams{
-			Balance: arg.Amount,
-			ID:      arg.ToAccountID,
-		})
-
-		if err != nil {
-			return err
-		}
-		result.ToAccount, err = queries.GetAccount(ctx, arg.ToAccountID)
-		if err != nil {
-			return err
-		}
 		return nil
 	})
 
 	return result, err
+}
+
+func addMoney(
+	ctx context.Context,
+	queries *Queries,
+	accountID1,
+	amount1,
+	accountID2,
+	amount2 int64,
+) (account1, account2 Account, err error) {
+	err = queries.AddAccountBalance(ctx, AddAccountBalanceParams{
+		Balance: amount1,
+		ID:      int32(accountID1),
+	})
+	if err != nil {
+		return
+	}
+
+	err = queries.AddAccountBalance(ctx, AddAccountBalanceParams{
+		Balance: amount2,
+		ID:      int32(accountID2),
+	})
+	if err != nil {
+		return
+	}
+
+	account1, err = queries.GetAccount(ctx, int32(accountID1))
+	if err != nil {
+		return
+	}
+
+	account2, err = queries.GetAccount(ctx, int32(accountID2))
+	if err != nil {
+		return
+	}
+	return
 }
