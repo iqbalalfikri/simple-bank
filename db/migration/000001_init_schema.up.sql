@@ -27,8 +27,6 @@ ALTER TABLE transfers ADD FOREIGN KEY (from_account_id) REFERENCES accounts (id)
 
 ALTER TABLE transfers ADD FOREIGN KEY (to_account_id) REFERENCES accounts (id);
 
-CREATE INDEX index_accounts_owner ON accounts (`owner`);
-
 CREATE INDEX index_entries_account_id ON entries (account_id);
 
 CREATE INDEX index_transfers_from_account_id ON transfers (from_account_id);
@@ -36,4 +34,3 @@ CREATE INDEX index_transfers_from_account_id ON transfers (from_account_id);
 CREATE INDEX index_transfers_to_account_id ON transfers (to_account_id);
 
 CREATE INDEX index_transfers_from_to_account_id ON transfers (from_account_id, to_account_id);
-

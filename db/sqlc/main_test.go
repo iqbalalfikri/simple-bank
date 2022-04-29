@@ -24,6 +24,7 @@ func TestMain(m *testing.M) {
 	}
 
 	testQueries = New(testDB)
-
+	tx := &sql.Tx{}
+	testQueries.WithTx(tx)
 	os.Exit(m.Run())
 }
