@@ -1,5 +1,5 @@
 -- name: CreateEntry :execresult
-INSERT IGNORE INTO entries(
+INSERT INTO entries(
     `account_id`, `amount`
 ) VALUES (?, ?);
 
