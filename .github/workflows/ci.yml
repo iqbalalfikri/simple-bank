@@ -36,6 +36,8 @@ jobs:
           sudo mv migrate /usr/bin
           which migrate
 
+      - name: set mysql foreign key checks to 0
+        run: docker exec -i mysql mysql -uroot -proot -e "set global foreign_key_checks = 0;"
       - name: Run Migration
         run: make migrateuptest
 
