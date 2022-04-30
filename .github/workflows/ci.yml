@@ -7,11 +7,9 @@ on:
     branches: [ main ]
 
 jobs:
-
-  test:
-    name: Test
+  ci:
+    name: Continuous Integration
     runs-on: ubuntu-latest
-
     services:
       mysql:
         image: mysql
@@ -22,6 +20,7 @@ jobs:
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=10 --name mysql
+
     steps:
       - uses: actions/checkout@v3
 
@@ -38,6 +37,7 @@ jobs:
 
       - name: set mysql foreign key checks to 0
         run: docker exec -i mysql mysql -uroot -proot -e "set global foreign_key_checks = 0;"
+
       - name: Run Migration
         run: make migrateuptest
 
