@@ -13,3 +13,4 @@ packages:
       output_db_file_name: "db.go"
       output_models_file_name: "models.go"
       output_querier_file_name: "querier.go"
+      emit_empty_slices: true
