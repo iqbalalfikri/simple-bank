@@ -6,7 +6,7 @@ packages:
       schema: "./db/migration/"
       engine: "mysql"
       emit_prepared_queries: false
-      emit_interface: false
+      emit_interface: true
       emit_exact_table_names: false
       emit_json_tags: true
       json_tags_case_style: "snake"
